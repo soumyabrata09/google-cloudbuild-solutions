@@ -11,7 +11,7 @@ import (
 	"github.com/joho/godotenv" // this package is used for loading the .env file
 )
 
-var databaseInstance *gorm.DB // Globally declaring the database instance
+var databaseInstance *gorm.DB // Globally declaring the database instancegit remote add origin git@github.com:soumyabrata09/googleCloudBuildSolutions.git
 //retirn a handle to the database object
 func getDB() *gorm.DB {
 	return databaseInstance
