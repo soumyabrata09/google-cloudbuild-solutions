@@ -47,6 +47,7 @@ func indexHandler(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 	//if everything goes well then we'll render the output of tha page here
+	//we will send a json response in future
 	fmt.Fprint(writer, "Hey everyone,This is hosted on goggle cloud primarily")
 
 }
