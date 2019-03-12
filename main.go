@@ -47,7 +47,7 @@ func indexHandler(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 	//if everything goes well then we'll render the output of tha page here
-	fmt.Fprint(writer, "Hey everyone")
+	fmt.Fprint(writer, "Hey everyone,This is hosted on goggle cloud primarily")
 
 }
 func main() {
@@ -60,6 +60,7 @@ func main() {
 		log.Printf("Listening to the default port %s", port)
 
 	}
+
 	log.Printf("Listening port %s", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 
