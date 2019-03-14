@@ -6,7 +6,7 @@
 // 	"os"
 
 // 	"./app"
-// 	"./controllers"
+// 	controllers "./controllers"
 // 	"github.com/gorilla/mux" // this api is a type of web router framework for go lang
 // )
 
@@ -15,8 +15,10 @@
 // 	//registering the api web routes
 // 	// router.HandleFunc("goapi/user/new", controllers.createNewAccount).Methods("POST")
 // 	// router.HandleFunc("goapi/user/login", controllers.letsAuthenticate).Methods("POST")
+// 	// getTheControllerAccCreation := controllers.CreateAccount
+// 	// getTheControllerAuthenticateAndLogin := controllers.letsAuthenticate
 // 	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
-// 	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
+// 	router.HandleFunc("/api/user/login", controllers.letsAuthenticate).Methods("POST")
 // 	router.Use(app.JwtAuthentication) // making using the JwtAuthentication which initially checks  for JWT authenticatation and routes to the desired page if satisfied
 // 	//getting the port from the .env file
 // 	port := os.Getenv("APPLICATION_PORT")
