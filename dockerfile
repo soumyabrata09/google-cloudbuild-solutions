@@ -1,10 +1,4 @@
-# FROM alpine
-# COPY main.go /
-# RUN chmod +x main.go
-# CMD ["./main.go"]
 FROM alpine
-# VOLUME /tmp
+# RUN chmod  *.go
 COPY main.go /
-EXPOSE 8001/tcp
-RUN chmod +x main.go
-ENTRYPOINT ["./main.go"]
+CMD ["/main.go"]
