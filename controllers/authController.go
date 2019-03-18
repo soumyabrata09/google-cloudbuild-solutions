@@ -9,7 +9,7 @@ import (
 )
 
 //These value methods will call the relevant functions from the models and eventually will call the CreateUser() and login() from our model
-var createNewAccount = func(writer http.ResponseWriter, request *http.Request) {
+var CreateNewAccount = func(writer http.ResponseWriter, request *http.Request) {
 
 	//getting the Account structure
 	accountStruct := &models.Account{}
@@ -26,7 +26,7 @@ var createNewAccount = func(writer http.ResponseWriter, request *http.Request) {
 }
 
 //These value methods will call the relevant functions from the models and eventually will call the Login() and login() from our model
-var letsAuthenticate = func(writer http.ResponseWriter, request *http.Request) {
+var LetsAuthenticate = func(writer http.ResponseWriter, request *http.Request) {
 	//getting the account here
 	accountStruct := &models.Account{}
 	// decoding the request body
