@@ -72,7 +72,7 @@
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
-  -name: 'gcr.io/cloud-builders/kubectl'
+  - name: 'gcr.io/cloud-builders/kubectl'
     args:
   - 'run'
   - 'cloud-solutions-deployagent'
