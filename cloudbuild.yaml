@@ -3,16 +3,35 @@ steps:
   args: [ 'build', '--tag', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.' ]
 # images:
 # - 'gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA', '.' '
+# - name: 'gcr.io/cloud-builders/kubectl'
+#   args:
+#    - 'set'
+#    - 'image'
+#    - 'cloudsolutions'
+#    - 'cloud-solution-container=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+#   env:
+#    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+#    - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
-   - 'set'
-   - 'image'
-   - 'cloudsolutions'
-   - 'cloud-solution-container=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
-   - '--ignore-not-found'
+  - 'delete'
+  - 'deployment'
+  - 'cloudsolutions'
+  - '--ignore-not-found'
   env:
-   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-   - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - 'run'
+  - 'cloudsolutions'
+  - '--image=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
+  # - 'resources requests cpu=100m memory=150Mi'
+  # - 'resources limits cpu=200m memory=250Mi'
+
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
    - 'scale'
