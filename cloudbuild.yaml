@@ -7,7 +7,7 @@ steps:
   args:
    - 'set'
    - 'image'
-   - 'deployment/cloud-sloutions-deployments'
+   - 'cloudsolutions'
    - 'cloud-solution-container=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
   env:
    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
@@ -16,7 +16,7 @@ steps:
   args:
    - 'scale'
    - 'deployment'
-   - '$PROJECT_ID'
+   - 'cloudsolutions'
    - '--replicas=3'
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
