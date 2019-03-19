@@ -9,6 +9,7 @@ steps:
    - 'image'
    - 'cloudsolutions'
    - 'cloud-solution-container=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+   - '--ignore-not-found'
   env:
    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
    - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
