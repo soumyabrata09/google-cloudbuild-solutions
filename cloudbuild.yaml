@@ -5,78 +5,78 @@
 # # - 'gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA', '.' '
 # images: ['gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
 
-steps:
-# - name: 'gcr.io/cloud-builders/mvn'
-#   args: ['install']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA', '.']
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-  - 'delete'
-  - 'deployment'
-  - 'gcpcloudbuildsolutions'
-  - '--ignore-not-found'
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=gcpcloudbuildsolutions'
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-  - 'run'
-  - 'deployment'
-  - 'gcpcloudbuildsolutions'
-  - '--image=gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA'
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=gcpcloudbuildsolutions'
-  - 'resources requests cpu=100m memory=150Mi'
-  - 'resources limits cpu=200m memory=250Mi'
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-  - 'scale'
-  - 'deployment'
-  - 'gcpcloudbuildsolutions'
-  - '--replicas=3'
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-  - 'delete'
-  - 'service'
-  - 'gcpcloud-build-solution-service'
-  - '--ignore-not-found'
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-  - 'expose'
-  - 'deployment'
-  - 'gcpcloudbuildsolutions'
-  - '--type=LoadBalancer'
-  - '--port=80'
-  - '--target-port=8001'
-  - '--name=gcpcloud-build-solution-service'
-  - '--load-balancer-ip=35.232.105.69'
-images: ['gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA']
-
 # steps:
-# - name: 'gcr.io/cloud-builders/npm'
-#   args: ['install']
-# - name: 'gcr.io/cloud-builders/npm'
-#   args: ['test']
+# # - name: 'gcr.io/cloud-builders/mvn'
+# #   args: ['install']
 # - name: 'gcr.io/cloud-builders/docker'
-#   args: [ 'build', '--tag', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.' ]
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: ["push", "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA"]
+#   args: ['build', '--tag=gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA', '.']
 # - name: 'gcr.io/cloud-builders/kubectl'
 #   args:
-#   - 'set'
-#   - 'image'
-#   - 'deployment/cloud-sloutions-deployments'
-#   - 'cloud-solution-container=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+#   - 'delete'
+#   - 'deployment'
+#   - 'gcpcloudbuildsolutions'
+#   - '--ignore-not-found'
 #   env:
 #   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-#   - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
-#   - name: 'gcr.io/cloud-builders/kubectl'
-#     args:
+#   - 'CLOUDSDK_CONTAINER_CLUSTER=gcpcloudbuildsolutions'
+# - name: 'gcr.io/cloud-builders/kubectl'
+#   args:
 #   - 'run'
-#   - 'cloud-solutions-deployagent'
-#   - '--image=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
-#   - name: 'gcr.io/cloud-builders/docker'
-#   args: ['push', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
-#   images: ['gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
+#   - 'deployment'
+#   - 'gcpcloudbuildsolutions'
+#   - '--image=gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA'
+#   env:
+#   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+#   - 'CLOUDSDK_CONTAINER_CLUSTER=gcpcloudbuildsolutions'
+#   - 'resources requests cpu=100m memory=150Mi'
+#   - 'resources limits cpu=200m memory=250Mi'
+# - name: 'gcr.io/cloud-builders/kubectl'
+#   args:
+#   - 'scale'
+#   - 'deployment'
+#   - 'gcpcloudbuildsolutions'
+#   - '--replicas=3'
+# - name: 'gcr.io/cloud-builders/kubectl'
+#   args:
+#   - 'delete'
+#   - 'service'
+#   - 'gcpcloud-build-solution-service'
+#   - '--ignore-not-found'
+# - name: 'gcr.io/cloud-builders/kubectl'
+#   args:
+#   - 'expose'
+#   - 'deployment'
+#   - 'gcpcloudbuildsolutions'
+#   - '--type=LoadBalancer'
+#   - '--port=80'
+#   - '--target-port=8001'
+#   - '--name=gcpcloud-build-solution-service'
+#   - '--load-balancer-ip=35.232.105.69'
+# images: ['gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA']
+
+steps:
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['test']
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '--tag', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA"]
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - 'set'
+  - 'image'
+  - 'deployment/cloud-sloutions-deployments'
+  - 'cloud-solution-container=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+  - 'run'
+  - 'cloud-solutions-deployagent'
+  - '--image=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+  - name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
+  images: ['gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
