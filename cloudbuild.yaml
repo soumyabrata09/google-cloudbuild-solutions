@@ -3,6 +3,27 @@ steps:
   args: [ 'build', '--tag', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.' ]
 # images:
 # - 'gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA', '.' '
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+   - 'set'
+   - 'image'
+   - 'deployment/cloud-sloutions-deployments'
+   - 'cloud-solution-container=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+  env:
+   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+   - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+   - 'scale'
+   - 'deployment'
+   - '$PROJECT_ID'
+   - '--replicas=3'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+   - 'delete'
+   - 'service'
+   - 'gcpcloud-build-solution-service'
+   - '--ignore-not-found'
 images: ['gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
 
 # steps:
