@@ -37,7 +37,7 @@ func (accountStruct *Account) Validate() (map[string]interface{}, bool) {
 	}
 	temp := &Account{}
 	//checking duplicate email ids
-	accountError := getDB().Table("accounts").Where("email = ?", accountStruct.Email).First(temp).Error
+	accountError := GetDB().Table("accounts").Where("email = ?", accountStruct.Email).First(temp).Error
 	if accountError != nil && accountError != gorm.ErrRecordNotFound {
 		return u.Message(false, "Interrupeted Network Connection, try again"), false
 	}
@@ -58,7 +58,7 @@ func (accountStruct *Account) CreateUser() map[string]interface{} {
 	hashedPwd, _ := bcrypt.GenerateFromPassword([]byte(accountStruct.Password), bcrypt.DefaultCost)
 	accountStruct.Password = string(hashedPwd) // converting the hashed password to a type of string
 	//creating the db of type accountstruct
-	getDB().Create(accountStruct)
+	GetDB().Create(accountStruct)
 	//check for error during account reation process
 	if accountStruct.ID <= 0 {
 		return u.Message(false, "Failed to create account, may be due to connection error")
@@ -83,7 +83,7 @@ func (accountStruct *Account) CreateUser() map[string]interface{} {
 func GetUser(uid uint) *Account {
 	accountStruct := &Account{}
 	//getting user from the the database by checking the uid passed
-	getDB().Table("accounts").Where("id=?", uid).First(accountStruct)
+	GetDB().Table("accounts").Where("id=?", uid).First(accountStruct)
 	//checking for the authenicity of the retrieved data if any
 	if accountStruct.Email == "" {
 		return nil // as email id mismatched
@@ -98,7 +98,7 @@ func Login(email, password string) map[string]interface{} {
 	// getting pointer of Account struct
 	accountStruct := &Account{}
 	//checking the autheticity of the email
-	err := getDB().Table("accounts").Where("email=?", email).First(accountStruct).Error
+	err := GetDB().Table("accounts").Where("email=?", email).First(accountStruct).Error
 	if err != nil {
 		//gorm specific exception thrown
 		if err == gorm.ErrRecordNotFound {

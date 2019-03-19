@@ -1,6 +1,5 @@
 package models
 
-//
 import (
 	"fmt"
 	"os"
@@ -13,7 +12,7 @@ import (
 
 var databaseInstance *gorm.DB // Globally declaring the database instancegit remote add origin git@github.com:soumyabrata09/googleCloudBuildSolutions.git
 //retirn a handle to the database object
-func getDB() *gorm.DB {
+func GetDB() *gorm.DB {
 	return databaseInstance
 }
 
@@ -31,13 +30,14 @@ func init() {
 	dbName := os.Getenv("db_name")
 	dbHost := os.Getenv("db_host")
 
-	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=false password=%", dbHost, userName, dbName, password)
-	fmt.Println(dbUri) //for testing purposes
+	//creation of the desired connection string
+	dbURI := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=false password=%s", dbHost, userName, dbName, password)
+	fmt.Println(dbURI) //for testing purposes
 
 	//connecting the postgres database
-	connectionInstance, conn_err := gorm.Open("postgres", dbUri)
-	if conn_err != nil {
-		fmt.Print(conn_err)
+	connectionInstance, connErr := gorm.Open("postgres", dbURI)
+	if connErr != nil {
+		fmt.Print(connErr)
 	}
 	databaseInstance = connectionInstance
 	databaseInstance.Debug().AutoMigrate(&Account{})

@@ -1,9 +1,9 @@
-steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '--tag', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.' ]
-# images:
-# - 'gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA', '.' '
-images: ['gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
+# steps:
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: [ 'build', '--tag', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.' ]
+# # images:
+# # - 'gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA', '.' '
+# images: ['gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
 
 # steps:
 # # - name: 'gcr.io/cloud-builders/mvn'
@@ -54,3 +54,30 @@ images: ['gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
 #   - '--load-balancer-ip=35.232.105.69'
 # images: ['gcr.io/cicd-69745/$REPO_NAME:$COMMIT_SHA']
 
+# steps:
+# - name: 'gcr.io/cloud-builders/npm'
+#   args: ['install']
+# - name: 'gcr.io/cloud-builders/npm'
+#   args: ['test']
+steps:
+ -name: 'gcr.io/cloud-builders/docker'
+  args: [ "build", "--tag", "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA", "." ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA"]
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - 'set'
+  - 'image'
+  - 'deployment/cloud-sloutions-deployments'
+  - 'cloud-solution-container=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-solutions-cluster'
+  -name: 'gcr.io/cloud-builders/kubectl'
+    args:
+  - 'run'
+  - 'cloud-solutions-deployagent'
+  - '--image=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+  - name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
+  images: ['gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
